@@ -212,6 +212,14 @@ div#names{
     text-decoration: none;
 }
 
+.anchor_none{
+    text-decoration: none;
+    color: #04587c;
+}
+.anchor_none:hover{
+    text-decoration: none;
+    color: #42b1e1;
+}
 @media screen and (max-width: 768px) {
 
     /* NAVBAR */
