@@ -180,3 +180,31 @@ div#names{
 .hidden {
     display: none;
 }
+
+#body_contact{
+    background-color: rgb(55, 55, 55);
+    display: grid;
+    gap: 20px;
+    grid-template-areas: "header"
+                        "main";
+}
+
+#header_contact{
+    grid-area: header;
+    
+}
+
+#main_contact{
+    grid-area: main;
+}
+
+#main_contact a{
+    grid-area: main;
+    color: #04587c;
+    text-decoration: none;
+}
+#main_contact a:hover{
+    grid-area: main;
+    color: #42c0f6;
+    text-decoration: none;
+}
