@@ -4,17 +4,39 @@ body{
     color: #e1d8d8;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
      font-size: 12px;
+     padding: 0px;
+     margin: 0px;
+
+}
+#grid-container{
+    display: grid;
+    grid-template-areas: "header"
+                            "main";
 }
 
+#presentation_image{
+    height: 90vh;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
 
 nav{
     overflow: auto;
     background-color: rgb(55, 55, 55);
 }
 
+#navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    background-color: rgb(224, 242, 245);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 nav a{
     float: left;
-    color: #e7e3e3;
+    color: #8450d2;
     display: block;
     padding: 12px 14px;
     font-size: 18px; 
@@ -22,9 +44,83 @@ nav a{
 }
 
 nav a:hover{
-    background-color: #000;
+    background-color: #42c0f6;
     color: #e1d8d8;
 }
+
+#container{
+    position: relative;
+    text-align: center;
+}
+
+#bodyclasse{
+     display: grid;
+    grid-template-areas: "header_classe"
+                            "main_classe";
+}
+#ynoubliabes{
+    position: absolute;
+    font-family: Montserrat;
+    font-size: 6em;
+    width: 1000px;
+    color: #f9fafd;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+}
+
+#b1_eleve{
+    position: absolute;
+    top: 95%;
+    left: 45%;
+    background-color: rgb(30, 16, 136);
+    border-radius: 12px;    
+    width: 250px;     
+}
+
+#b1_eleve a{
+    text-decoration: none;
+    font-family: Montserrat;
+    color: rgb(149, 237, 237);
+}
+#b1_eleve:hover{
+    background-color: #42c0f6;
+}
+#admin{
+    position: absolute;
+    top: 95%;
+    left: 0%;
+    background-color: rgb(246, 20, 20);
+    border-radius: 12px;    
+    width: 250px;     
+}
+#admin a{
+    text-decoration: none;
+    font-family: Montserrat;
+    color: rgb(149, 237, 237);
+}
+#admin:hover{
+    background-color: #f7b15c;
+}
+
+#join{
+    position: absolute;
+    top: 95%;
+    right: 0%;
+    background-color: rgb(143, 6, 134);
+    border-radius: 12px;    
+    width: 250px;     
+}
+#join a{
+    text-decoration: none;
+    font-family: Montserrat;
+    color: rgb(149, 237, 237);
+}
+#join:hover{
+    background-color: #f75cef;
+}
+
 
 nav input[type="text"]{
     float: right;
@@ -38,12 +134,20 @@ nav input[type="text"]{
 div#names a{
     color: #e1d8d8;
     text-decoration: none;
-    float: left;
-    
-   
-   
+    float: left;   
     padding: 12px 14px;
     font-size: 18px; 
+}
+
+div#names{
+     grid-area: main_classe;
+     display: grid;
+     grid-template-columns: 1fr 1fr 1fr 1fr ;
+     grid-template-rows: 1fr 1fr 1fr 1fr  1fr 1fr 1fr 1fr;
+    
+}
+#header_classe{
+    grid-area: header_classe;
 }
 #a1{
    
