@@ -13,7 +13,10 @@ body{
     grid-template-areas: "header"
                             "main";
 }
-
+.active{
+    padding-top:20px ;
+    padding-bottom: 30px;
+}
 #presentation_image{
     height: 90vh;
     width: 100%;
@@ -79,7 +82,7 @@ nav a:hover{
     width: 250px;     
 }
 
-#b1_eleve a{
+#b1_eleve {
     text-decoration: none;
     font-family: Montserrat;
     color: rgb(149, 237, 237);
@@ -95,7 +98,7 @@ nav a:hover{
     border-radius: 12px;    
     width: 250px;     
 }
-#admin a{
+#admin {
     text-decoration: none;
     font-family: Montserrat;
     color: rgb(149, 237, 237);
@@ -112,7 +115,7 @@ nav a:hover{
     border-radius: 12px;    
     width: 250px;     
 }
-#join a{
+#join {
     text-decoration: none;
     font-family: Montserrat;
     color: rgb(149, 237, 237);
@@ -207,4 +210,73 @@ div#names{
     grid-area: main;
     color: #42c0f6;
     text-decoration: none;
+}
+
+@media screen and (max-width: 768px) {
+
+    /* NAVBAR */
+    #navbar {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+        padding: 5px;
+    }
+
+    #navbar h2 {
+        width: 100%;
+        font-size: 20px;
+        margin: 5px 0;
+    }
+
+    nav a {
+        font-size: 14px;
+        padding: 10px 8px;
+    }
+
+    .active {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+
+    /* CONTENEUR PRINCIPAL */
+    #container {
+        width: 100%;
+        overflow: hidden;
+    }
+
+
+    /* IMAGE */
+    #presentation_image {
+        width: 100%;
+        height: 65vh;
+        object-fit: cover;
+        object-position: center;
+    }
+
+
+    /* TITRE */
+    #ynoubliabes {
+        width: 90%;
+        font-size: 3em;
+        top: 35%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        overflow: visible;
+    }
+
+
+    /* BOUTONS */
+    #b1_eleve,
+    #admin,
+    #join {
+        position: static;
+        display: block;
+        width: 80%;
+        max-width: 300px;
+        margin: 15px auto;
+        padding: 12px;
+        box-sizing: border-box;
+    }
+
 }
