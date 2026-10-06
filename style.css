@@ -158,6 +158,7 @@ div#names{
 .insta {
     width: 24px;
     height: 24px;
+    fill: rgb(31, 205, 244);
 }
 #header_classe{
     grid-area: header_classe;
