@@ -60,6 +60,7 @@ nav a:hover{
      display: grid;
     grid-template-areas: "header_classe"
                             "main_classe";
+    background-color: #F1F1F1;
 }
 #ynoubliabes{
     position: absolute;
@@ -123,8 +124,12 @@ nav a:hover{
 #join:hover{
     background-color: #f75cef;
 }
-
-
+.noir_p{
+    color: black;
+}
+.name_blue{
+    color: #45c6e2;
+}
 nav input[type="text"]{
     float: right;
     padding: 6px;
@@ -147,10 +152,29 @@ div#names{
      display: grid;
      grid-template-columns: 1fr 1fr 1fr 1fr ;
      grid-template-rows: 1fr 1fr 1fr 1fr  1fr 1fr 1fr 1fr;
+     gap: 20px
     
 }
 #header_classe{
     grid-area: header_classe;
+  
+}
+#max_sara{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap:20px
+}
+.carte{
+    background-color: white;
+    text-align: center;
+    padding: 15px;
+    border-radius: 12px;
+}
+.rounded{
+    display: block;
+    border-radius: 12px;
+    
+    object-fit: cover;
 }
 #a1{
    
