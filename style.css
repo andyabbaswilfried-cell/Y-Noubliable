@@ -155,6 +155,10 @@ div#names{
      gap: 20px
     
 }
+.insta {
+    width: 24px;
+    height: 24px;
+}
 #header_classe{
     grid-area: header_classe;
   
