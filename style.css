@@ -221,6 +221,16 @@ div#names{
                         "main";
 }
 
+.color_ynov{
+    background-color: #F1F1F1;
+}
+.color_ynov h2,h1{
+    color: #629cf9;
+}
+
+.color_ynov p{
+    color: #030508;
+}
 #header_contact{
     grid-area: header;
     
