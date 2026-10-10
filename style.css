@@ -34,7 +34,7 @@ nav{
     justify-content: space-between;
     align-items: center;
     font-size: 20px;
-    background-color: rgb(224, 242, 245);
+    background-color: rgb(124, 190, 252);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 nav a{
@@ -67,7 +67,7 @@ nav a:hover{
     font-family: Montserrat;
     font-size: 6em;
     width: 1000px;
-    color: #f9fafd;
+    color: #b77fe4;
     top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -310,6 +310,7 @@ div#names{
         left: 50%;
         transform: translate(-50%, -50%);
         overflow: visible;
+    
     }
 
 
