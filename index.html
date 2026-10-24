@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <link rel="stylesheet" href="style.css">
-     <link rel="stylesheet" href="link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg==" crossorigin="anonymous" referrerpolicy="no-referrer">"
+     <link rel="stylesheet" href="css/home.css">
      
     
 </head>
     <header>
-        <nav id="navbar">
+        <nav class="site-nav">
             <h2> YNOV BORDEAUX</h2>
             <div id="search">
                 <label for="fname">Rechercher</label>
                 <input placeholder="Céline Pelissier">
             </div>     
-            <div class="dropdown">
-               <button id="dropdown"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu preview-icon"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg></button> 
-               <div class="content">
+            <div class="nav-dropdown">
+               <button><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu preview-icon"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg></button>
+               <div class="nav-dropdown__content">
                 <a href="classe.html">B1 Informatique</a>   
             </div>
             </div>
@@ -27,16 +27,18 @@
     <script src="index.js"></script>
 
     </header>
-<body id="grid-container">
+<body class="home-page">
 
    
     <main>
-<div id="container">
-   <img id="presentation_image" src="photo_ynov/ynov-2.webpaid" alt="photo  de Bordeaux Ynov " >
-   <h1 id="ynoubliabes"> LES<br> Y-NOUBLIABLES</h1>
-   <a href="classe.html"><button id="b1_eleve">CLASSE B1</button></a>
-    <a href="https://www.ynov.com/campus/bordeaux/equipe" target="_blank"><button id="admin">ADMINISTRATION</button></a>
-    <a href="https://www.ynov.com/candidature" target="_blank"><button id="join">REJOINDRE YNOV</button></a> 
+<div class="home-hero">
+   <img class="home-hero__image" src="photo_ynov/ynov-2.webpaid" alt="photo  de Bordeaux Ynov " >
+   <h1 class="home-hero__title"> LES<br> Y-NOUBLIABLES</h1>
+   <div class="home-actions">
+       <a class="home-action home-action--class" href="classe.html">CLASSE B1</a>
+       <a class="home-action home-action--administration" href="https://www.ynov.com/campus/bordeaux/equipe" target="_blank">ADMINISTRATION</a>
+       <a class="home-action home-action--join" href="https://www.ynov.com/candidature" target="_blank">REJOINDRE YNOV</a>
+   </div>
  </div>
  
     </main>

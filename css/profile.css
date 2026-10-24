@@ -1,0 +1,51 @@
+.profile-page {
+    min-height: 100vh;
+    padding: 24px;
+    background-color: #f1f1f1;
+    color: #111;
+}
+
+.profile-page h1,
+.profile-page h2 {
+    color: #629cf9;
+}
+
+.profile-intro {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.profile-photo {
+    display: inline-block;
+    max-width: 100%;
+    height: auto;
+    max-height: 400px;
+    margin-top: 10px;
+    object-fit: cover;
+}
+
+.profile-description {
+    max-width: 900px;
+    margin: 0 auto 20px;
+    color: #111;
+    font-size: 20px;
+}
+
+.profile-link {
+    color: #04587c;
+    text-decoration: none;
+}
+
+.profile-link:hover {
+    color: #42b1e1;
+}
+
+@media screen and (max-width: 600px) {
+    .profile-page {
+        padding: 16px;
+    }
+
+    .profile-description {
+        font-size: 17px;
+    }
+}

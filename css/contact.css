@@ -1,0 +1,29 @@
+.contact-page {
+    display: grid;
+    grid-template-areas:
+        "header"
+        "main";
+    gap: 20px;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: #373737;
+}
+
+.contact-header {
+    grid-area: header;
+}
+
+.contact-main {
+    grid-area: main;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.contact-main a {
+    color: #04587c;
+    text-decoration: none;
+}
+
+.contact-main a:hover {
+    color: #42c0f6;
+}

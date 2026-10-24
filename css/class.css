@@ -1,0 +1,90 @@
+.class-page {
+    display: grid;
+    grid-template-areas:
+        "header"
+        "main";
+    background-color: #f1f1f1;
+    color: #111;
+}
+
+.class-header {
+    grid-area: header;
+}
+
+.class-page > main {
+    grid-area: main;
+}
+
+.student-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.mentor-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.profile-card {
+    padding: 15px;
+    border-radius: 12px;
+    background-color: #fff;
+    text-align: center;
+}
+
+.profile-card img {
+    max-width: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.profile-card__image {
+    display: block;
+    margin: 0 auto;
+}
+
+.profile-card__detail {
+    color: #000;
+}
+
+.profile-card__name {
+    color: #168ba5;
+}
+
+.mentor-link {
+    padding: 12px 14px;
+    color: #333;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.social-icon {
+    width: 24px;
+    height: 24px;
+    fill: #1fcdf4;
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+}
+
+@media screen and (max-width: 600px) {
+    .student-grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .mentor-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 12px;
+    }
+}
