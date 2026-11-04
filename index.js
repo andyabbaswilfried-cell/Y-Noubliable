@@ -72,7 +72,7 @@ app.post("/mail_ynov_token",async (req,res,) => {
             await sendMail(
                 mail_ynov_user,
                 "Vérification lien",
-                `Tiens ton lien : <a href="http://localhost:3000/verification_mail?token=${token}">Vérifier ton email</a>`
+                `Tiens ton lien : <a https://y-noubliable.onrender.com/verification_mail?token=${token}">Vérifier ton email</a>`
             );
             res.sendStatus(200);
         } catch(error) {
