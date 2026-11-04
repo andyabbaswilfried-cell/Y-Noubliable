@@ -1,0 +1,67 @@
+/* Write your CSS code here */
+
+body{
+    display: grid;
+    place-content: center;
+    min-height:100vh;
+    font-family: 'Mulish', sans-serif;
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+background-color: rgb(224, 235, 250);
+}
+#main{
+    background-color: white;
+    padding:15px;
+    border-radius: 12px;
+    border: 1px solid rgb(220, 225, 235);
+}
+h1{
+    color:#1B2447;
+    font-weight: 700;
+    font-family: 'Mulish', sans-serif;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+p{
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+}
+#seen{
+    margin-bottom: 10px;
+}
+input{
+    border: solid 2px rgb(120, 180, 220);
+    
+    size: 300px;
+   outline: none;
+    padding: 10px;
+    
+    border-radius: 4px;
+    height: 40px;
+    margin-bottom: 10px;
+    width: 240px;
+    
+}
+#email{
+    display: block;
+   
+}
+#new{
+    background-color: rgb(5, 5, 58);
+    color:white;
+    font-size:15px;
+    font-weight: 700;
+    padding:10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    width: 60%;
+    display: flex;
+        justify-content: center;
+        justify-self: center;
+}
+.terms{
+    font-size: 12px;
+}
