@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require('express');
 const passport = require('passport');
 const session = require('express-session');
+const crypto = require('crypto');
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const PORT= 3000;
 
@@ -58,37 +59,39 @@ app.get("/logout",(req,res)=>{
         res.redirect("/");
 });
 
-app.post("/mail_ynov_token",async (req,res,)=> {
-  const util = require("util");
-
-const randomBytes = util.promisify(crypto.randomBytes);
-
-const buff = await randomBytes(32);
-
-const token = buff.toString("hex");
-    
-  
+app.post("/mail_ynov_token",async (req,res,) => {
     let mail_ynov_user=req.body["email_ynov_bdx"];
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-   if (typeof(mail_ynov_user) === "string"&& emailRegex.test(mail_ynov_user) && mail_ynov_user.endsWith("@ynov.com")){
-         mail_ynov_user=mail_ynov_user.toLowerCase()
+    if (typeof(mail_ynov_user) === "string" && emailRegex.test(mail_ynov_user) && mail_ynov_user.endsWith("@ynov.com")) {
+        mail_ynov_user=mail_ynov_user.toLowerCase();
+        const token = crypto.randomBytes(32).toString("hex");
+        req.session.emailVerificationToken = token;
 
-        try{
-            await sendMail(mail_ynov_user,"Vérification lien","Tiens ton lien:"+token)
-            res.status(200).send(200)
-            
-            
-        }catch(error){
+        try {
+            await sendMail(
+                mail_ynov_user,
+                "Vérification lien",
+                `Tiens ton lien : <a href="http://localhost:3000/verification_mail?token=${token}">Vérifier ton email</a>`
+            );
+            res.sendStatus(200);
+        } catch(error) {
             console.error(error)
-         
-            res.sendStatus(500)
+            res.sendStatus(500);
+        }
+    } else {
+        console.log("erreur ton email n'est pas approprié");
+        res.sendStatus(400);
     }
-}else{
-    res.status(400)
-    console.log("erreur ton email n'est pas approprié")
-     res.sendStatus(400)   
-} 
+});
 
+app.get("/verification_mail", (req,res) => {
+    const token = req.query.token;
+    if (typeof token === "string" && token === req.session.emailVerificationToken) {
+        delete req.session.emailVerificationToken;
+        res.redirect("index.html");
+    } else {
+        res.sendStatus(400);
+    }
 });
 
 app.listen(PORT,()=>{
