@@ -74,7 +74,7 @@ app.post("/mail_ynov_token",async (req,res,) => {
                 "Vérification lien",
                 `Tiens ton lien : <a href="https://y-noubliable.onrender.com/verification_mail?token=${token}">Vérifier ton email</a>`
             );
-            res.redirect("wait_confirmation.html");
+            res.redirect("/wait_confirmation.html");
         } catch(error) {
             console.error(error)
             res.sendStatus(500);
