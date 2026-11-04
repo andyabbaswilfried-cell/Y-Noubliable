@@ -4,7 +4,8 @@ const passport = require('passport');
 const session = require('express-session');
 const crypto = require('crypto');
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const PORT= 3000;
+
+const PORT = process.env.PORT || 3000;
 
 const mail = require("./mailer");
 const sendMail = require("./mailer");
@@ -94,6 +95,6 @@ app.get("/verification_mail", (req,res) => {
     }
 });
 
-app.listen(PORT,()=>{
-    console.log("Server is running at 3000")
+app.listen(PORT, () => {
+    console.log(`Server is running at ${PORT}`);
 });
