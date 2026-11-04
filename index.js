@@ -32,7 +32,7 @@ passport.use(
     {
     clientID: process.env.ID_CLIENT,
     clientSecret: process.env.CODE_SECRET_CLIENT,
-    callbackURL: "http://localhost:3000/auth/google/callback",
+    callbackURL: "https://y-noubliable.onrender.com/auth/google/callback"
 
 }, (accessToken, refreshToken, profile, done) => {
     return done(null, profile)
