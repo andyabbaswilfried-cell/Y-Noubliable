@@ -50,10 +50,7 @@ function requireAuth(req, res, next) {
 }
 
 app.get("/", (req, res) => {
-    if (req.isAuthenticated()) {
-        return res.redirect("/index.html");
-    }
-    return res.send("<a href='/auth/google'>Login</a>");
+    res.sendFile("sign_up.html", { root: __dirname });
 });
 
 app.get("/index.html", requireAuth, (req, res) => {
