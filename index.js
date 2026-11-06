@@ -66,7 +66,7 @@ app.post("/mail_ynov_token",async (req,res,) => {
     if (typeof(mail_ynov_user) === "string" && emailRegex.test(mail_ynov_user) && mail_ynov_user.endsWith("@ynov.com")) {
         mail_ynov_user=mail_ynov_user.toLowerCase();
         const token = crypto.randomBytes(32).toString("hex");
-        req.session.emailVerificationToken = token;
+        req.session.emailVerificationToken = token; 
 
         try {
             await sendMail(

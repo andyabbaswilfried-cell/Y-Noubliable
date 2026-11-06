@@ -1,34 +1,24 @@
 
 require("dotenv").config();
-const nodemailer =  require("nodemailer");
-const transporter = nodemailer.createTransport(
-    {
-        secure:true,
-        host:'smtp.gmail.com',
-        port:
-465,
-        auth:{
-            user:process.env.ADRESSEMAILYNOUBLIABLE,
-            pass:process.env.MOTDEPASSEYNOUBLIABLE
-        }
-    }
-)
-
 
 async function sendMail(to,sub,msg){
     try{
-    await transporter.sendMail({
-        from:process.env.ADRESSEMAILYNOUBLIABLE,
-        to:to,
-        subject:sub,
-        html:msg,
-    });
-    console.log("success")
-    }
-    catch (error){
-        console.error(error)
-        throw new Error("error")
-    }
     
+      let res = await fetch("https://api.brevo.com/v3/smtp/email" ,{
+            'method': 'POST',
+                headers:{'accept': 'application/json',
+                    'api-key':process.env.CLE_API,
+                    'content-type': 'application/json'},body:JSON.stringify({"sender":{"email":process.env.ADRESSEMAILYNOUBLIABLE},subject:sub,htmlContent:msg,to:[{"email":to}]})
+       });
+       if (res.ok  === false){
+         
+                 throw new Error("Failed to send email")
+             }
+             console.log("success")
+        } catch (error) {
+            console.error(error)
+            throw error
+        }
 }
-module.exports = sendMail
+
+module.exports=sendMail
