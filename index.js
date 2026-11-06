@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3000;
 const mail = require("./mailer");
 const sendMail = require("./mailer");
 console.log(mail)
+const twenty4hours= 86400000 
 const app= express();
 app.use(
     session({
@@ -67,7 +68,7 @@ app.post("/mail_ynov_token",async (req,res,) => {
         mail_ynov_user=mail_ynov_user.toLowerCase();
         const token = crypto.randomBytes(32).toString("hex");
         req.session.emailVerificationToken = token; 
-
+        req.session.token_expiration=Date.now()
         try {
             await sendMail(
                 mail_ynov_user,
@@ -87,6 +88,11 @@ app.post("/mail_ynov_token",async (req,res,) => {
 
 app.get("/verification_mail", (req,res) => {
     const token = req.query.token;
+    const time=  Date.now() -req.session.token_expiration
+    if (time > twenty4hours){
+         res.sendStatus(400);
+         return
+    }
     if (typeof token === "string" && token === req.session.emailVerificationToken) {
         delete req.session.emailVerificationToken;
         res.redirect("index.html");
