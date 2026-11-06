@@ -21,7 +21,6 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static(__dirname ));
 app.use(
     express.urlencoded({
         extended: true,
@@ -43,9 +42,23 @@ passport.use(
 passport.serializeUser((user, done) => done(null,user ));
 passport.deserializeUser((user,done)=> done(null, user));
 
-app.get("/",(req,res)=> {
-    res.send("<a href='/auth/google'>Login</a>")
-})
+function requireAuth(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    return res.redirect("/");
+}
+
+app.get("/", (req, res) => {
+    if (req.isAuthenticated()) {
+        return res.redirect("/index.html");
+    }
+    return res.send("<a href='/auth/google'>Login</a>");
+});
+
+app.get("/index.html", requireAuth, (req, res) => {
+    res.sendFile("index.html", { root: __dirname });
+});
 
 app.get(
     "/auth/google",
@@ -68,7 +81,7 @@ app.post("/mail_ynov_token",async (req,res,) => {
         mail_ynov_user=mail_ynov_user.toLowerCase();
         const token = crypto.randomBytes(32).toString("hex");
         req.session.emailVerificationToken = token; 
-        req.session.token_expiration=Date.now()
+        req.session.token_date_of_creation=Date.now()
         try {
             await sendMail(
                 mail_ynov_user,
@@ -88,7 +101,7 @@ app.post("/mail_ynov_token",async (req,res,) => {
 
 app.get("/verification_mail", (req,res) => {
     const token = req.query.token;
-    const time=  Date.now() -req.session.token_expiration
+    const time=  Date.now() -req.session.token_date_of_creation
     if (time > twenty4hours){
          res.sendStatus(400);
          return
@@ -100,6 +113,8 @@ app.get("/verification_mail", (req,res) => {
         res.sendStatus(400);
     }
 });
+
+app.use(express.static(__dirname));
 
 app.listen(PORT, () => {
     console.log(`Server is running at ${PORT}`);
