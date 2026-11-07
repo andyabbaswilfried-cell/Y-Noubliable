@@ -7,8 +7,8 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 const PORT = process.env.PORT || 3000;
 
-const mail = require("./mailer");
 const sendMail = require("./mailer");
+
 console.log(mail)
 const twenty4hours= 86400000 
 const app= express();
@@ -96,6 +96,7 @@ app.post("/mail_ynov_token",async (req,res,) => {
     }
 });
 
+
 app.get("/verification_mail", (req,res) => {
     const token = req.query.token;
     const time=  Date.now() -req.session.token_date_of_creation
@@ -105,9 +106,20 @@ app.get("/verification_mail", (req,res) => {
     }
     if (typeof token === "string" && token === req.session.emailVerificationToken) {
         delete req.session.emailVerificationToken;
-        res.redirect("/index.html");
+
+        const user = {
+            email: req.session.emailVerificationEmail,
+            provider: "ynov"
+        };
+        req.login(user, (err) => {
+            if (err) {
+                return res.sendStatus(500);
+            }
+
+            return res.redirect("/index.html");
+        });
     } else {
-        res.sendStatus(400);
+        return res.sendStatus(400);
     }
 });
 
@@ -116,3 +128,4 @@ app.use(express.static(__dirname));
 app.listen(PORT, () => {
     console.log(`Server is running at ${PORT}`);
 });
+ 
