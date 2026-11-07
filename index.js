@@ -68,7 +68,7 @@ app.get("/auth/google/callback", passport.authenticate('google',{failureRedirect
 
 app.get("/logout",(req,res)=>{
         req.logout();
-        res.redirect("/");
+        res.redirect("/sign_up.html");
 });
 
 app.post("/mail_ynov_token",async (req,res,) => {

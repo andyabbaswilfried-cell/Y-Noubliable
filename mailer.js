@@ -3,7 +3,6 @@ require("dotenv").config();
 
 async function sendMail(to,sub,msg){
     try{
-    
       let res = await fetch("https://api.brevo.com/v3/smtp/email" ,{
             'method': 'POST',
                 headers:{'accept': 'application/json',
