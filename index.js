@@ -105,7 +105,7 @@ app.get("/verification_mail", (req,res) => {
     }
     if (typeof token === "string" && token === req.session.emailVerificationToken) {
         delete req.session.emailVerificationToken;
-        res.redirect("index.html");
+        res.redirect("/index.html");
     } else {
         res.sendStatus(400);
     }
