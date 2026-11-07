@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 
 const sendMail = require("./mailer");
 
-console.log(mail)
+
 const twenty4hours= 86400000 
 const app= express();
 app.use(
