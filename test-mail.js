@@ -1,32 +1,26 @@
+const { application } = require("express");
+
 require("dotenv").config();
-const nodemailer =  require("nodemailer");
-const transporter = nodemailer.createTransport(
-    {
-        secure:true,
-        host:'smtp.gmail.com',
-        port:
-465,
-        auth:{
-            user:process.env.ADRESSEMAILYNOUBLIABLE,
-            pass:process.env.MOTDEPASSEYNOUBLIABLE
-        }
-    }
-)
-
-
 async function sendMail(to,sub,msg){
     try{
-    await transporter.sendMail({
-        from:process.env.ADRESSEMAILYNOUBLIABLE,
-        to:to,
-        subject:sub,
-        html:msg,
-    });
-    console.log("success")
-    }
-    catch (error){
+    let res = await fetch("https://api.brevo.com/v3/smtp/email",
+        {method: "POST",
+            headers:{
+                "api-key":process.env.CLE_API,
+                accept:"application/json",
+                "content-type": "application/json"
+            }, body: JSON.stringify({
+                "sender":{email: process.env.ADRESSEYNOUBLIABLE},
+                subject:sub,
+                htmlContent:msg,
+                to:[{email:to}]
+            })
+        }
+
+       
+    )
+    }catch(error){
         console.error(error)
-        throw new Error("error")
-    }  
+        throw error
+    }
 }
-sendMail("andyabbaswilfried@gmail.com","Verification","Clique sur ce lien pour prouver que tu es un utilisateur")

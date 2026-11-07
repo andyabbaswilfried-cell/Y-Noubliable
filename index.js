@@ -82,8 +82,8 @@ app.post("/mail_ynov_token",async (req,res,) => {
         try {
             await sendMail(
                 mail_ynov_user,
-                "Vérification lien",
-                `Tiens ton lien : <a href="https://y-noubliable.onrender.com/verification_mail?token=${token}">Vérifier ton email</a>`
+                "Lien de Vérification",
+                `Tiens ton lien, tu n'as que 24 heures avant qu'il n'expire: <a href="https://y-noubliable.onrender.com/verification_mail?token=${token}">Vérifier ton email</a>`
             );
             res.redirect("/wait_confirmation.html");
         } catch(error) {
