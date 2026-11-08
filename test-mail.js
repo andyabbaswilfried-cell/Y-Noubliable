@@ -16,8 +16,6 @@ async function sendMail(to,sub,msg){
                 to:[{email:to}]
             })
         }
-
-       
     )
     }catch(error){
         console.error(error)
