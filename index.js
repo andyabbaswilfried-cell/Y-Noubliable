@@ -3,34 +3,18 @@ const express = require('express');
 const passport = require('passport');
 const session = require('express-session');
 const crypto = require('crypto');
-const { Pool } = require('pg');
-const connectPgSimple = require('connect-pg-simple');
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 const PORT = process.env.PORT || 3000;
 
 const sendMail = require("./mailer");
-
-if (!process.env.DATABASE_URL) {
-    throw new Error("DATABASE_URL is required to connect to Neon Postgres");
-}
+const { create } = require("domain");
 
 const twenty4hours= 86400000 
 const app= express();
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-const PgSessionStore = connectPgSimple(session);
-const sessionStore = new PgSessionStore({
-    pool,
-    createTableIfMissing: true,
-});
-
-pool.on("error", (error) => {
-    console.error("Unexpected Neon Postgres pool error:", error);
-});
 
 app.use(
     session({
-    store: sessionStore,
     secret: process.env.SECRET,
     resave:false,
     saveUninitialized:false,
@@ -59,14 +43,8 @@ passport.use(
 passport.serializeUser((user, done) => done(null,user ));
 passport.deserializeUser((user,done)=> done(null, user));
 
-app.get("/health", async (req, res) => {
-    try {
-        await pool.query("SELECT 1");
-        res.json({ status: "ok", database: "connected" });
-    } catch (error) {
-        console.error("Neon Postgres health check failed:", error);
-        res.sendStatus(503);
-    }
+app.get("/health", (req, res) => {
+    res.json({ status: "ok" });
 });
 
 function requireAuth(req, res, next) {
@@ -122,7 +100,7 @@ app.post("/mail_ynov_token",async (req,res,) => {
         res.sendStatus(400);
     }
 });
-
+db
 
 app.get("/verification_mail", (req,res) => {
     const token = req.query.token;
@@ -158,5 +136,5 @@ if (require.main === module) {
     });
 }
 
-module.exports = { app, pool, sessionStore };
+module.exports = { app };
  
