@@ -123,7 +123,7 @@ app.post("/mail_ynov_token",async (req,res,) => {
     }
 });
 
-
+//cp
 app.get("/verification_mail", (req,res) => {
     const token = req.query.token;
     const time=  Date.now() -req.session.token_date_of_creation
