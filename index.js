@@ -100,7 +100,7 @@ app.post("/mail_ynov_token",async (req,res,) => {
         res.sendStatus(400);
     }
 });
-db
+
 
 app.get("/verification_mail", (req,res) => {
     const token = req.query.token;
