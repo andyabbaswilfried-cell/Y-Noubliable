@@ -11,6 +11,14 @@ const sendMail = require("./mailer");
 const { create } = require("domain");
 
 const twenty4hours= 86400000 
+const sqlite3 = require("sqlite3")
+
+const db = new sqlite3.Database("./users.db",(err)=>{
+    if (err){
+        return console.log(err)
+    }
+    console.log("Connection established")
+})
 const app= express();
 
 app.use(
@@ -77,13 +85,27 @@ app.get("/logout",(req,res)=>{
 });
 
 app.post("/mail_ynov_token",async (req,res,) => {
+
+
     let mail_ynov_user=req.body["email_ynov_bdx"];
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (typeof(mail_ynov_user) === "string" && emailRegex.test(mail_ynov_user) && mail_ynov_user.endsWith("@ynov.com")) {
         mail_ynov_user=mail_ynov_user.toLowerCase();
         const token = crypto.randomBytes(32).toString("hex");
-        req.session.emailVerificationToken = token; 
-        req.session.token_date_of_creation=Date.now()
+            db.run(`CREATE TABLE IF NOT EXISTS verification_users(
+    id integer  PRIMARY KEY AUTOINCREMENT,
+    token text NOT NULL,
+    email text NOT NULL,
+    expiration INTEGER NOT NULL
+)`,(insert)=>{
+     query= "INSERT INTO verification_users(token,email,expiration) VALUES(?,?,?)"
+     values=[token,mail_ynov_user,Date.now()],
+     db.run(query,values)
+
+    })
+        
+    
+       
         try {
             await sendMail(
                 mail_ynov_user,
@@ -109,6 +131,12 @@ app.get("/verification_mail", (req,res) => {
          res.sendStatus(400);
          return
     }
+    token =db.get("SELECT token FROM verification_users",(error,rows)=>{
+        if (!error){
+            console.log(rows)
+        }
+        
+    })
     if (typeof token === "string" && token === req.session.emailVerificationToken) {
         delete req.session.emailVerificationToken;
 
