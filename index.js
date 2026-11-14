@@ -92,29 +92,16 @@ app.post("/mail_ynov_token",async (req,res,) => {
     if (typeof(mail_ynov_user) === "string" && emailRegex.test(mail_ynov_user) && mail_ynov_user.endsWith("@ynov.com")) {
         mail_ynov_user=mail_ynov_user.toLowerCase();
         const token = crypto.randomBytes(32).toString("hex");
-            db.run(`CREATE TABLE IF NOT EXISTS verification_users(
-                    id integer  PRIMARY KEY AUTOINCREMENT,
-                    token text NOT NULL,
-                    email text NOT NULL,
-                    expiration_date INTEGER NOT NULL
-)`,(error)=>{
-    if (error === null){
-         const query= "INSERT INTO verification_users(token,email,expiration_date) VALUES(?,?,?)";
-     const values=[token,mail_ynov_user,Date.now()+twenty4hours];
-     db.run(query,values,(error)=>{
-         if (error !== null){
-             console.log(error)
-         }
-     })
-    }else{
-        console.log(error)
-    }
-    
-    })
-        
+           
+     
     
        
         try {
+            await client.execute({
+        sql:"INSERT INTO verification_users(token,email,expiration_date) VALUES(?,?,?)",
+        args:[token,mail_ynov_user,Date.now()+twenty4hours]
+    
+    })
             await sendMail(
                 mail_ynov_user,
                 "Lien de Vérification",
@@ -132,40 +119,49 @@ app.post("/mail_ynov_token",async (req,res,) => {
 });
 
 //cp
-app.get("/verification_mail", (req, res) => {
+app.get("/verification_mail", async (req, res) => {
     const token = req.query.token;
 
-    if (typeof token === "string") {
-        
+    if (typeof token !== "string") {
+        return res.sendStatus(400);
+    }
 
-        db.get("SELECT token, email, expiration_date FROM verification_users WHERE token = ?", [token], (error, row) => {
-            if (error) {
+    try {
+        const result = await client.execute({
+            sql: "SELECT token, email, expiration_date FROM verification_users WHERE token = ?",
+            args: [token]
+        });
+
+        const row = result.rows?.[0];
+
+        if (!row) {
+            return res.sendStatus(400);
+        }
+
+        if (Date.now() >= Number(row.expiration_date)) {
+            return res.sendStatus(400);
+        }
+
+        const user = {
+            email: row.email,
+            provider: "ynov"
+        };
+        const delete_user= await client.execute({
+        sql:"DELETE FROM verification_users WHERE token = ?",
+        args:[token],
+            })
+            console.log(delete_user)
+
+        req.login(user, (err) => {
+            if (err) {
                 return res.sendStatus(500);
             }
 
-            if (!row) {
-                return res.sendStatus(400);
-            }
-            if (Date.now()>=row.expiration_date ){
-                return res.sendStatus(400)
-            }
-
-
-            const user = {
-                email: row.email,
-                provider: "ynov"
-            };
-
-            req.login(user, (err) => {
-                if (err) {
-                    return res.sendStatus(500);
-                }
-
-                return res.redirect("/index.html");
-            });
+            return res.redirect("/index.html");
         });
-    } else {
-        return res.sendStatus(400);
+    } catch (error) {
+        console.error(error);
+        return res.sendStatus(500);
     }
 });
 
