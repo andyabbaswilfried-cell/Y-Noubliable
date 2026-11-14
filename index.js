@@ -105,7 +105,13 @@ app.post("/mail_ynov_token",async (req,res,) => {
             await sendMail(
                 mail_ynov_user,
                 "Lien de Vérification",
-                `Tiens ton lien, tu n'as que 24 heures avant qu'il n'expire: <a href="https://y-noubliable.onrender.com/verification_mail?token=${token}">Vérifier ton email</a>`
+                `<p>Bonjour,</p>
+<p>Nous avons bien reçu votre demande de vérification d'adresse e-mail.</p>
+<p>Pour confirmer votre adresse et accéder à votre espace, veuillez cliquer sur le lien ci-dessous :</p>
+<p><a href="https://y-noubliable.onrender.com/verification_mail?token=${token}">Confirmer mon adresse e-mail</a></p>
+<p>Ce lien est valable pendant 24 heures et ne peut être utilisé qu'une seule fois.</p>
+<p>Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer ce message en toute sécurité.</p>
+<p>Cordialement,<br>L'équipe Y-Noubliable</p>`
             );
             res.redirect("/wait_confirmation.html");
         } catch(error) {
