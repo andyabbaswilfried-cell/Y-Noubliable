@@ -13,7 +13,7 @@ const { create } = require("domain");
 const twenty4hours= 86400000 
 const sqlite3 = require("sqlite3")
 
-const db = new sqlite3.Database("./users.db",(err)=>{
+const db = new sqlite3.Database("./verification_users.db",(err)=>{
     if (err){
         return console.log(err)
     }
@@ -93,15 +93,23 @@ app.post("/mail_ynov_token",async (req,res,) => {
         mail_ynov_user=mail_ynov_user.toLowerCase();
         const token = crypto.randomBytes(32).toString("hex");
             db.run(`CREATE TABLE IF NOT EXISTS verification_users(
-    id integer  PRIMARY KEY AUTOINCREMENT,
-    token text NOT NULL,
-    email text NOT NULL,
-    expiration INTEGER NOT NULL
-)`,(insert)=>{
-     query= "INSERT INTO verification_users(token,email,expiration) VALUES(?,?,?)"
-     values=[token,mail_ynov_user,Date.now()],
-     db.run(query,values)
-
+                    id integer  PRIMARY KEY AUTOINCREMENT,
+                    token text NOT NULL,
+                    email text NOT NULL,
+                    expiration_date INTEGER NOT NULL
+)`,(error)=>{
+    if (error === null){
+         const query= "INSERT INTO verification_users(token,email,expiration_date) VALUES(?,?,?)";
+     const values=[token,mail_ynov_user,Date.now()+twenty4hours];
+     db.run(query,values,(error)=>{
+         if (error !== null){
+             console.log(error)
+         }
+     })
+    }else{
+        console.log(error)
+    }
+    
     })
         
     
@@ -124,32 +132,37 @@ app.post("/mail_ynov_token",async (req,res,) => {
 });
 
 //cp
-app.get("/verification_mail", (req,res) => {
+app.get("/verification_mail", (req, res) => {
     const token = req.query.token;
-    const time=  Date.now() -req.session.token_date_of_creation
-    if (time > twenty4hours){
-         res.sendStatus(400);
-         return
-    }
-    token =db.get("SELECT token FROM verification_users",(error,rows)=>{
-        if (!error){
-            console.log(rows)
-        }
-        
-    })
-    if (typeof token === "string" && token === req.session.emailVerificationToken) {
-        delete req.session.emailVerificationToken;
 
-        const user = {
-            email: req.session.emailVerificationEmail,
-            provider: "ynov"
-        };
-        req.login(user, (err) => {
-            if (err) {
+    if (typeof token === "string") {
+        
+
+        db.get("SELECT token, email, expiration_date FROM verification_users WHERE token = ?", [token], (error, row) => {
+            if (error) {
                 return res.sendStatus(500);
             }
 
-            return res.redirect("/index.html");
+            if (!row) {
+                return res.sendStatus(400);
+            }
+            if (Date.now()>=row.expiration_date ){
+                return res.sendStatus(400)
+            }
+
+
+            const user = {
+                email: row.email,
+                provider: "ynov"
+            };
+
+            req.login(user, (err) => {
+                if (err) {
+                    return res.sendStatus(500);
+                }
+
+                return res.redirect("/index.html");
+            });
         });
     } else {
         return res.sendStatus(400);
