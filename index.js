@@ -10,15 +10,15 @@ const PORT = process.env.PORT || 3000;
 const sendMail = require("./mailer");
 const { create } = require("domain");
 
-const twenty4hours= 86400000 
-const sqlite3 = require("sqlite3")
+const twenty4hours= 86400000;
+const {createClient}  =require("@tursodatabase/serverless/compat");
 
-const db = new sqlite3.Database("./verification_users.db",(err)=>{
-    if (err){
-        return console.log(err)
-    }
-    console.log("Connection established")
-})
+const client = createClient({
+  url: process.env.TURSO_DATABASE_URL,
+  authToken: process.env.TURSO_AUTH_TOKEN,
+});
+
+
 const app= express();
 
 app.use(
