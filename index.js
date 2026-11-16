@@ -8,8 +8,6 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const PORT = process.env.PORT || 3000;
 
 const sendMail = require("./mailer");
-const { create } = require("domain");
-
 const twenty4hours= 86400000;
 const {createClient}  =require("@tursodatabase/serverless/compat");
 
@@ -91,11 +89,7 @@ app.post("/mail_ynov_token",async (req,res,) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (typeof(mail_ynov_user) === "string" && emailRegex.test(mail_ynov_user) && mail_ynov_user.endsWith("@ynov.com")) {
         mail_ynov_user=mail_ynov_user.toLowerCase();
-        const token = crypto.randomBytes(32).toString("hex");
-           
-     
-    
-       
+        const token = crypto.randomBytes(32).toString("hex");     
         try {
             await client.execute({
         sql:"INSERT INTO verification_users(token,email,expiration_date) VALUES(?,?,?)",
@@ -106,13 +100,13 @@ app.post("/mail_ynov_token",async (req,res,) => {
                 mail_ynov_user,
                 "Lien de Vérification",
                 `<p>Bonjour,</p>
-<p>Nous avons bien reçu votre demande de vérification d'adresse e-mail.</p>
-<p>Pour confirmer votre adresse et accéder à votre espace, veuillez cliquer sur le lien ci-dessous :</p>
-<p><a href="https://y-noubliable.onrender.com/verification_mail?token=${token}">Confirmer mon adresse e-mail</a></p>
-<p>Ce lien est valable pendant 24 heures et ne peut être utilisé qu'une seule fois.</p>
-<p>Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer ce message en toute sécurité.</p>
-<p>Cordialement,<br>L'équipe Y-Noubliable</p>`
-            );
+                <p>Nous avons bien reçu votre demande de vérification d'adresse e-mail.</p>
+                <p>Pour confirmer votre adresse et accéder à votre espace, veuillez cliquer sur le lien ci-dessous :</p>
+                <p><a href="https://y-noubliable.onrender.com/verification_mail?token=${token}">Confirmer mon adresse e-mail</a></p>
+                <p>Ce lien est valable pendant 24 heures et ne peut être utilisé qu'une seule fois.</p>
+                <p>Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer ce message en toute sécurité.</p>
+                <p>Cordialement,<br>L'équipe Y-Noubliable</p>`
+            );      
             res.redirect("/wait_confirmation.html");
         } catch(error) {
             console.error(error)
