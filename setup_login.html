@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+    <link rel="stylesheet" href="css/setup.css">
+</head>
+<body>  
+    <div id="container">
+       
+       
+        <h1>Informations sur toi</h1>
+        <p id="creat">Rentre tes infos ynov afin de commencer ton aventure.</p>
+
+      <form action="https:/y-noubliable.onrender.com/create_user_account"  method="POST" enctype="multipart/form-data">
+        <label for="email"> email:</label>
+        <input type="email" placeholder="Guillaume.Daniel@ynov.com" id="email" name="email" class="input_info" required>
+        <label for="fname"> Prénom:</label>
+        <input type="text" placeholder="Guillaume" id="fname" class="input_info" name="fname" required>
+        
+        <label for="lname"> Nom:</label>
+        <input type="text" placeholder="Daniel" id="lname" class="input_info" name="lname" required>
+        <label for="pword"> password:</label>
+         <input type="password" placeholder="........." id="pword" class="input_info" name="pword" required>
+         <label for="description"> Description:</label>
+        <textarea  placeholder="Salut je suis Guillaume, élève en archi, vous me croiserez souvent à la table de baby foot." id="description" class="input_info" name="description"></textarea>
+        <label for="date_of_birth"> Date de naissance:</label>
+        <input type="date" class="input_info" id="date_of_birth" name="date_of_birth" required>
+        <label for="yphoto"> photo de ta tête:</label>
+        <input type="file"  id="yphoto" class="input_info" name="yphoto" accept="image/*" required>
+        <label for="classe">Choisis ta classe</label>
+        <select name="classe" id="classe"required> 
+           
+            <option value="B1">B1</option>
+            <option value="B2">B2</option>
+            <option value="B3">B3</option>
+            <option value="M1">M1</option>
+            <option value="M2">M2</option>
+        </select>
+        <label for="filiere">Choisis ta filière</label>
+         <select name="filiere" id="filiere" required> 
+          
+            <option value="Informatique">Informatique</option>
+            <option value="Architecture">Architecture</option>
+            <option value="CDP">Chef de projet</option>
+            <option value="Audiovisuel">Audiovisuel</option>
+            <option value="Son">Son</option>
+        </select>
+        <div id="checkbox">
+            <input type="checkbox" id="interested_in_updates" name="interested_in_updates" >
+            <label for="interested_in_updates">Je suis prêt à recevoir des emails de la part d'Y-Noubliable.</label>
+
+            
+        </div>
+        <button id="new" type="submit">Envoyez toute les Informations</button>
+            
+      </form>
+        <p>Je vous conseillerais de vous relire car votre choix sera définitif</p>
+            
+    </div>
+    
+   
+</body>
+</html>

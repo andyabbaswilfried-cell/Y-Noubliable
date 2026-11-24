@@ -164,7 +164,17 @@ app.get("/verification_mail", async (req, res) => {
         return res.sendStatus(500);
     }
 });
+app.post("/create_user_account",async(req,res)=>{
+    const email= req.body[]
+    try{
+        await client.execute({
+            sql:"INSERT INTO ynoubliables_users(email,first_name,last_name,password,description,photo_de_profil,user_classe,user_filiere,checkbox) VALUES(?,?,?,?;?;?;?,?,?)",
+            args:[token,mail_ynov_user,Date.now()+twenty4hours]
+        })
+    }
 
+
+})
 app.use(express.static(__dirname));
 
 if (require.main === module) {
