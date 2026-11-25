@@ -208,7 +208,7 @@ app.post("/create_user_account",upload.single('yphoto'),async(req,res)=>{
         const user_filiere = req.body["filiere"];
         const email_acceptation = req.body["interested_in_updates"];
       await   client.execute({
-            sql:"INSERT INTO ynoubliables_users(email,first_name,last_name,password,description,photo_de_profil,user_classe,user_filiere,email_acceptation,date_of_birth) VALUES(?,?,?,?,?,?,?,?,?,?)",
+            sql:"INSERT INTO ynoubliables_user(email,first_name,last_name,password,description,photo_de_profil,user_classe,user_filiere,email_acceptation,date_of_birth) VALUES(?,?,?,?,?,?,?,?,?,?)",
             args:[email,first_name,last_name,hash,description,photo_de_profil,user_classe,user_filiere,email_acceptation,date_of_birth]
         });
             res.redirect("/index.html");
