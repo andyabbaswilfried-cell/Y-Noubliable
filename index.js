@@ -184,7 +184,7 @@ app.post("/create_user_account",upload.single('yphoto'),async(req,res)=>{
         // Handle error
          console.log(err)
            return res.sendStatus(500);
-        return;
+        
     }
 
     // Salt generation successful, proceed to hash the password
