@@ -174,6 +174,7 @@ app.post("/create_user_account",upload.single('yphoto'),async(req,res)=>{
     const email= req.body["email"];
     const first_name=req.body["fname"];
     const last_name=req.body["lname"];
+     const userPassword = req.body["pword"];
     bcrypt.genSalt(saltRounds, (err, salt) => {
     if (err) {
         // Handle error
@@ -181,8 +182,8 @@ app.post("/create_user_account",upload.single('yphoto'),async(req,res)=>{
     }
 
     // Salt generation successful, proceed to hash the password
-    });
-    const userPassword = req.body["pword"]; // Replace with the actual password
+   
+    // Replace with the actual password
     bcrypt.hash(userPassword, salt, (err, hash) => {
         if (err) {
             // Handle error
@@ -192,16 +193,18 @@ app.post("/create_user_account",upload.single('yphoto'),async(req,res)=>{
     // Hashing successful, 'hash' contains the hashed password
     console.log('Hashed password:', hash);
     });
+    });
+
     const description = req.body["description"]; 
-    const user_classe = req.body["user_classe"];
+    const user_classe = req.body["classe"];
     const date_of_birth = req.body["date_of_birth"]
     const photo_de_profil =req.file.buffer;
-     const user_filiere = req.body["classe"];
-    const email_acceptation = req.body["filiere"];
+     const user_filiere = req.body["filiere"];
+    const email_acceptation = req.body["interested_in_updates"];
     try{
         await client.execute({
             sql:"INSERT INTO ynoubliables_users(email,first_name,last_name,password,description,photo_de_profil,user_classe,user_filiere,email_acceptation,date_of_birth) VALUES(?,?,?,?,?,?,?,?,?,?)",
-            args:[email,first_name,last_name,userPassword,description,photo_de_profil,user_classe,filiere,email_acceptation,date_of_birth]
+            args:[email,first_name,last_name,userPassword,description,photo_de_profil,user_classe,user_filiere,email_acceptation,date_of_birth]
         });
             res.redirect("/index.html");
     }
