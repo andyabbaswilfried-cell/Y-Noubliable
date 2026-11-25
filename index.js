@@ -170,7 +170,7 @@ app.get("/verification_mail", async (req, res) => {
     }
 });
 
-app.post("/create_user_account",upload.single('profile_photo'),async(req,res)=>{
+app.post("/create_user_account",upload.single('yphoto'),async(req,res)=>{
     const email= req.body["email"];
     const first_name=req.body["fname"];
     const last_name=req.body["lname"];
