@@ -222,6 +222,9 @@ app.post("/create_user_account",upload.single('yphoto'),async(req,res)=>{
 })
     
     })}else{
+        console.log(typeof(email) === "string",
+emailRegex.test(email),
+email.endsWith("@ynov.com"))
         return res.sendStatus(400)
     }
     });
