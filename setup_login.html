@@ -13,7 +13,7 @@
         <h1>Informations sur toi</h1>
         <p id="creat">Rentre tes infos ynov afin de commencer ton aventure.</p>
 
-      <form action="https:/y-noubliable.onrender.com/create_user_account"  method="POST" enctype="multipart/form-data">
+      <form action="https://y-noubliable.onrender.com/create_user_account"  method="POST" enctype="multipart/form-data">
         <label for="email"> email:</label>
         <input type="email" placeholder="Guillaume.Daniel@ynov.com" id="email" name="email" class="input_info" required>
         <label for="fname"> Prénom:</label>
@@ -30,8 +30,8 @@
         <label for="yphoto"> photo de ta tête:</label>
         <input type="file"  id="yphoto" class="input_info" name="yphoto" accept="image/*" required>
         <label for="classe">Choisis ta classe</label>
-        <select name="classe" id="classe"required> 
-           
+        <select name="classe" id="classe" required> 
+            <option value="" selected disabled>Je suis en</option>
             <option value="B1">B1</option>
             <option value="B2">B2</option>
             <option value="B3">B3</option>
@@ -40,7 +40,7 @@
         </select>
         <label for="filiere">Choisis ta filière</label>
          <select name="filiere" id="filiere" required> 
-          
+             <option value=""  selected disabled>Je suis en</option>
             <option value="Informatique">Informatique</option>
             <option value="Architecture">Architecture</option>
             <option value="CDP">Chef de projet</option>

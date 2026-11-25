@@ -4,6 +4,13 @@ const passport = require('passport');
 const session = require('express-session');
 const crypto = require('crypto');
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const multer = require('multer')
+const upload = multer({ m: './public/data/uploads/' })
+app.post('/stats', upload.single('uploaded_file'), function (req, res) {
+  // req.file is the name of your file in the form above, here 'uploaded_file'
+  // req.body will hold the text fields, if there were any
+  console.log(req.file, req.body)
+});
 
 const PORT = process.env.PORT || 3000;
 
@@ -164,13 +171,17 @@ app.get("/verification_mail", async (req, res) => {
         return res.sendStatus(500);
     }
 });
+
 app.post("/create_user_account",async(req,res)=>{
-    const email= req.body[]
+    const email= req.body["email"]
     try{
         await client.execute({
-            sql:"INSERT INTO ynoubliables_users(email,first_name,last_name,password,description,photo_de_profil,user_classe,user_filiere,checkbox) VALUES(?,?,?,?;?;?;?,?,?)",
+            sql:"INSERT INTO ynoubliables_users(email,first_name,last_name,password,description,photo_de_profil,user_classe,user_filiere,checkbox) VALUES(?,?,?,?;?;?;?,?,?,?<)",
             args:[token,mail_ynov_user,Date.now()+twenty4hours]
         })
+    }
+    catch(e){
+        res.send(e)
     }
 
 
