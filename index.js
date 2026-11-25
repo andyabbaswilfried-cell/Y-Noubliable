@@ -198,11 +198,12 @@ app.post("/create_user_account",upload.single('profile_photo'),async(req,res)=>{
     const photo_de_profil =req.file.buffer;
      const user_filiere = req.body["classe"];
     const email_acceptation = req.body["filiere"];
-        try{
+    try{
         await client.execute({
-            sql:"INSERT INTO ynoubliables_users(email,first_name,last_name,password,description,photo_de_profil,user_classe,user_filiere,email_acceptation,date_od_birth) VALUES(?,?,?,?;?;?;?,?,?,?<)",
+            sql:"INSERT INTO ynoubliables_users(email,first_name,last_name,password,description,photo_de_profil,user_classe,user_filiere,email_acceptation,date_of_birth) VALUES(?,?,?,?,?,?,?,?,?,?)",
             args:[email,first_name,last_name,userPassword,description,photo_de_profil,user_classe,filiere,email_acceptation,date_of_birth]
-        })
+        });
+            res.redirect("/index.html");
     }
     catch(e){
         return  res.sendStatus(e)
