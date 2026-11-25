@@ -4,8 +4,11 @@ const passport = require('passport');
 const session = require('express-session');
 const crypto = require('crypto');
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const bcryot=reqyuire('bcrypt')
+const slatRounds=10;
 const multer = require('multer')
-const upload = multer({ m: './public/data/uploads/' })
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage })
 app.post('/stats', upload.single('uploaded_file'), function (req, res) {
   // req.file is the name of your file in the form above, here 'uploaded_file'
   // req.body will hold the text fields, if there were any
@@ -164,7 +167,7 @@ app.get("/verification_mail", async (req, res) => {
                 return res.sendStatus(500);
             }
 
-            return res.redirect("/index.html");
+            return res.redirect("/setup_login.html");
         });
     } catch (error) {
         console.error(error);
@@ -172,16 +175,42 @@ app.get("/verification_mail", async (req, res) => {
     }
 });
 
-app.post("/create_user_account",async(req,res)=>{
-    const email= req.body["email"]
-    try{
+app.post("/create_user_account",upload.single('profile_photo'),async(req,res)=>{
+    const email= req.body["email"];
+    const first_name=req.body["fname"];
+    const last_name=req.body["lname"];
+    bcrypt.genSalt(saltRounds, (err, salt) => {
+    if (err) {
+        // Handle error
+        return;
+    }
+
+    // Salt generation successful, proceed to hash the password
+    });
+    const userPassword = req.body["pword"]; // Replace with the actual password
+    bcrypt.hash(userPassword, salt, (err, hash) => {
+        if (err) {
+            // Handle error
+            return;
+        }
+
+    // Hashing successful, 'hash' contains the hashed password
+    console.log('Hashed password:', hash);
+    });
+    const description = req.body["description"]; 
+    const user_classe = req.body["user_classe"];
+    const date_of_birth = req.body["date_of_birth"]
+    const photo_de_profil =req.file.buffer;
+     const user_filiere = req.body["classe"];
+    const email_acceptation = req.body["filiere"];
+        try{
         await client.execute({
-            sql:"INSERT INTO ynoubliables_users(email,first_name,last_name,password,description,photo_de_profil,user_classe,user_filiere,checkbox) VALUES(?,?,?,?;?;?;?,?,?,?<)",
-            args:[token,mail_ynov_user,Date.now()+twenty4hours]
+            sql:"INSERT INTO ynoubliables_users(email,first_name,last_name,password,description,photo_de_profil,user_classe,user_filiere,email_acceptation,date_od_birth) VALUES(?,?,?,?;?;?;?,?,?,?<)",
+            args:[email,first_name,last_name,userPassword,description,photo_de_profil,user_classe,filiere,email_acceptation,date_of_birth]
         })
     }
     catch(e){
-        res.send(e)
+        return  res.sendStatus(e)
     }
 
 
