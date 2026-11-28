@@ -8,6 +8,15 @@
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
     font-size: 20px;
 }
+#user-avatar {
+    width: 45px;
+    height: 45px;
+    max-width: 45px;
+    max-height: 45px;
+    object-fit: cover;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
 
 .site-nav a {
     display: block;
