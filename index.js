@@ -266,7 +266,39 @@ app.post("/sign_in_yuser", async (req,res)=>{
  }
 })
 app.use(express.static(__dirname));
+app.get("/api/me/photo", requireAuth, async (req, res) => {
+    try {
+        const result = await client.execute({
+            sql: "SELECT photo_de_profil FROM ynoubliables_user WHERE email = ?",
+            args: [req.user.email]
+        });
 
+        const user = result.rows[0];
+
+        if (!user || !user.photo_de_profil) {
+            return res.sendStatus(404);
+        }
+
+        const { fileTypeFromBuffer } = await import("file-type");
+
+        const buffer = Buffer.from(user.photo_de_profil);
+
+        const fileType = await fileTypeFromBuffer(buffer);
+
+        const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+
+        if (!fileType || !allowedTypes.includes(fileType.mime)) {
+            return res.sendStatus(415);
+        }
+
+        res.type(fileType.mime);
+        return res.send(buffer);
+
+    } catch (e) {
+        console.error(e);
+        return res.sendStatus(500);
+    }
+});
 if (require.main === module) {
     app.listen(PORT, () => {
         console.log(`Server is running at ${PORT}`);
