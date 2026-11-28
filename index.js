@@ -82,10 +82,6 @@ app.get("/auth/google/callback", passport.authenticate('google',{failureRedirect
     res.redirect('/index.html')
 });
 
-app.get("/logout",(req,res)=>{
-        req.logout();
-        res.redirect("/sign_up.html");
-});
 
 app.post("/mail_ynov_token",async (req,res,) => {
 
@@ -163,7 +159,7 @@ app.get("/verification_mail", async (req, res) => {
             }
 
             return res.redirect("/setup_login.html");
-        });
+        }); 
     } catch (error) {
         console.error(error);
         return res.sendStatus(500);
@@ -229,7 +225,15 @@ email.endsWith("@ynov.com"))
     }
     });
 
-    
+app.post("/logout", (req, res) => {
+    req.logout((err) => {
+        if (err) {
+            return res.sendStatus(500);
+        }
+
+        res.redirect("/");
+    });
+});
    
 app.use(express.static(__dirname));
 
