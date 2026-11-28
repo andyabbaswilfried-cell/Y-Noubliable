@@ -235,6 +235,36 @@ app.post("/logout", (req, res) => {
     });
 });
    
+app.post("/sign_in_yuser", async (req,res)=>{
+    try{
+      const result=  await client.execute({
+       sql: "SELECT * FROM ynoubliables_user WHERE email = ?",
+       args: [req.body["email"]]
+});
+    
+ const user = result.rows[0];
+ if (!user){
+    return res.sendStatus(401);
+ }
+    const isMatch=  await bcrypt.compare(req.body["pword"],user.password)
+      if (!isMatch){
+        return res.sendStatus(401)
+    }
+      req.login({ email: user.email }, (err) => {
+    if (err) {
+        console.error(err);
+        return res.sendStatus(500);
+    }
+
+    return res.redirect("/index.html");
+});
+        
+     }
+ catch(e){
+    console.error(e);
+    res.sendStatus(500);
+ }
+})
 app.use(express.static(__dirname));
 
 if (require.main === module) {

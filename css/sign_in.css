@@ -1,0 +1,66 @@
+/* Write your CSS code here */
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #dbeafe;
+        min-height: 100vh;
+        font-family: "Montserrat";
+        color:rgb(15, 15, 101);
+   
+    display: grid;
+   place-content: center;  
+}
+
+
+h1{
+    text-align: center ;
+    margin-bottom: 5px;
+}
+
+#checkbox{
+    display: flex;
+    margin-left:30px ;
+}
+
+
+#container{
+    background-color: white;
+    border-radius: 5px;
+    padding: 20px 32px;
+}
+
+.input_info{
+      block-size: 2rem;
+      inline-size: 15rem;
+      outline: none;
+      border: 1px solid rgb(182, 182, 186);
+      border-radius: 4px;
+      padding-inline:0.5rem 0 ;
+}
+
+label{
+    display: block;
+}
+
+
+#new{
+    background-color: rgb(5, 5, 58);
+    color:white;
+    font-size:15px;
+    font-weight: 700;
+    padding:10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    width: 60%;
+    display: flex;
+        justify-content: center;
+        justify-self: center;
+}
+select{
+    display: block;
+    margin-bottom: 0.8rem;
+}
